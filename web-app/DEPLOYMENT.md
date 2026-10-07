@@ -16,7 +16,7 @@ Open `http://localhost:5000`. The existing Spark result folders and `dataset/soc
 
 1. Push this repository to a GitHub repository.
 2. In Render, choose **New +** then **Blueprint**, and select that repository. Render will read `render.yaml` from the repository root.
-3. In the new service's Environment settings, set credentials for at least one provider. For the supplied Aisa endpoints, set `AISA_API_TOKEN`; for Meta, set `INSTAGRAM_ACCESS_TOKEN` and `INSTAGRAM_USER_ID`. Keep all tokens private and never commit them.
+3. The Blueprint selects Render's free web-service plan and does not require API credentials to deploy. Without a live provider, the app analyzes its bundled sample dataset.
 4. Deploy. Render builds from the repository root so the dataset and checked-in analysis outputs are available to the app.
 
 The hosted app uses Gunicorn. `PROJECT_ROOT` is resolved from the app's location, so it does not depend on the original Windows/WSL path.
@@ -25,7 +25,7 @@ The hosted app uses Gunicorn. `PROJECT_ROOT` is resolved from the app's location
 
 Instagram hashtag search is not an unauthenticated public trending API. Create a Meta app, connect an Instagram Business or Creator account, obtain an access token and Instagram account ID, and request `instagram_basic` plus the approved Instagram Public Content Access feature. Meta reviews are required for public hashtag content access.
 
-The provider order is Meta Instagram Graph API, Aisa Instagram trending Reels, optional Apify Instagram actor, Aisa Twitter trends, then optional X recent search. Configure `AISA_API_TOKEN` to enable both Aisa endpoints; configure credentials for any other fallback you want available. The app skips providers without credentials and moves to the next provider when one fails.
+The provider order is Meta Instagram Graph API, Aisa Instagram trending Reels, optional Apify Instagram actor, Aisa Twitter trends, then optional X recent search. After deployment, add `AISA_API_TOKEN` under the Render service's Environment settings to enable Aisa; add credentials for any other fallback you want available. The app skips providers without credentials and moves to the next provider when one fails. Never commit tokens.
 
 The Aisa integration calls `GET https://api.aisa.one/apis/v1/instagram/reels/trending` and `GET https://api.aisa.one/apis/v1/twitter/trends?count=30`, sending `Authorization: Bearer $AISA_API_TOKEN`. Set `AISA_TWITTER_TRENDS_COUNT` to adjust the requested count (1-100). The dashboard normalizes common response envelopes and metric field names; exact metrics shown depend on the fields Aisa returns for your account and plan.
 

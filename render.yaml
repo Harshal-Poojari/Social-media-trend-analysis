@@ -2,6 +2,7 @@ services:
   - type: web
     name: social-media-trend-analysis
     runtime: python
+    plan: free
     buildCommand: pip install -r web-app/requirements.txt
     startCommand: gunicorn --bind 0.0.0.0:$PORT --chdir web-app app:app
     envVars:
@@ -11,21 +12,9 @@ services:
         value: v22.0
       - key: INSTAGRAM_TREND_HASHTAGS
         value: ai,travel,fashion,food,fitness
-      - key: INSTAGRAM_ACCESS_TOKEN
-        sync: false
-      - key: INSTAGRAM_USER_ID
-        sync: false
-      - key: AISA_API_TOKEN
-        sync: false
       - key: AISA_TWITTER_TRENDS_COUNT
         value: "30"
-      - key: APIFY_API_TOKEN
-        sync: false
-      - key: APIFY_INSTAGRAM_ACTOR_ID
-        sync: false
       - key: APIFY_INSTAGRAM_INPUT
         value: '{"hashtags":["ai","travel","fashion","food","fitness"],"resultsLimit":100}'
-      - key: X_API_BEARER_TOKEN
-        sync: false
       - key: X_TREND_QUERY
         value: '(#ai OR #travel OR #fashion OR #food OR #fitness) -is:retweet'
