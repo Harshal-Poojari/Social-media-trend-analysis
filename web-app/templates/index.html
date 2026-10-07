@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Trend Analysis Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .btn-run {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-run:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .progress-section {
+            display: none;
+        }
+        
+        .progress-section.active {
+            display: block;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+            background: #e5e7eb;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+        }
+        
+        .results-section {
+            display: none;
+        }
+        
+        .results-section.active {
+            display: block;
+        }
+        
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 10px;
+        }
+        
+        .table thead {
+            position: sticky;
+            top: 0;
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .status-ready {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-not-run {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-running {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            background: #f3f4f6;
+            color: #4b5563;
+            font-size: 0.85rem;
+            margin: 5px;
+            font-weight: 500;
+        }
+        
+        .process-step {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: #f9fafb;
+            border-left: 4px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step.active {
+            border-left-color: var(--success-color);
+            background: #ecfdf5;
+        }
+        
+        .process-step.completed {
+            border-left-color: var(--primary-color);
+            background: #eef2ff;
+        }
+        
+        .process-step i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>Social Media Trend Analysis
+            </a>
+            <div class="ms-auto">
+                <span class="status-badge status-not-run" id="statusBadge">
+                    <i class="fas fa-circle me-2"></i>Not Run
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <!-- Header Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="mb-3">Big Data Analytics Dashboard</h1>
+                            <p class="text-muted mb-0">
+                                Analyze social media trends using Hadoop, PySpark, and R. 
+                                Process large datasets, discover trending hashtags, and visualize engagement patterns.
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <button class="btn btn-run w-100" id="runAnalysisBtn" onclick="runAnalysis()">
+                                <i class="fas fa-play me-2"></i>Run Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <h4 class="mb-3"><i class="fas fa-layer-group me-2"></i>Technology Stack</h4>
+                    <div>
+                        <span class="tech-badge"><i class="fab fa-hadoop me-1"></i>Hadoop</span>
+                        <span class="tech-badge"><i class="fab fa-python me-1"></i>PySpark</span>
+                        <span class="tech-badge"><i class="fab fa-r-project me-1"></i>R</span>
+                        <span class="tech-badge"><i class="fas fa-database me-1"></i>HDFS</span>
+                        <span class="tech-badge"><i class="fas fa-chart-bar me-1"></i>Analytics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dataset Info -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <h4 class="mb-3"><i class="fas fa-database me-2"></i>Dataset Information</h4>
+                    <div class="row" id="datasetInfo">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <h3 id="totalRows">-</h3>
+                                <p>Total Records</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <h3 id="totalColumns">-</h3>
+                                <p>Columns</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stat-card">
+                                <h5>Columns:</h5>
+                                <p id="columnNames" class="mb-0">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="row mb-5 progress-section" id="progressSection">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <h4 class="mb-3"><i class="fas fa-cog fa-spin me-2"></i>Analysis in Progress</h4>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                             style="width: 100%"></div>
+                    </div>
+                    <p class="text-muted mb-0" id="progressText">
+                        Running PySpark analysis... This may take a few minutes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Process Flow -->
+        <div class="row mb-5" id="processFlow">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <h4 class="mb-3"><i class="fas fa-project-diagram me-2"></i>Analysis Pipeline</h4>
+                    <div class="process-step" id="step1">
+                        <i class="fas fa-file-csv"></i>Load CSV Dataset
+                    </div>
+                    <div class="process-step" id="step2">
+                        <i class="fas fa-bolt"></i>PySpark Processing
+                    </div>
+                    <div class="process-step" id="step3">
+                        <i class="fas fa-hashtag"></i>Hashtag Trend Analysis
+                    </div>
+                    <div class="process-step" id="step4">
+                        <i class="fas fa-chart-pie"></i>Platform Comparison
+                    </div>
+                    <div class="process-step" id="step5">
+                        <i class="fas fa-calendar-alt"></i>Daily Trend Analysis
+                    </div>
+                    <div class="process-step" id="step6">
+                        <i class="fas fa-save"></i>Save Results to CSV
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-Time Trends Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0"><i class="fas fa-chart-line me-2" style="color:#c13584"></i>Live Social Trends</h4>
+                        <button class="btn btn-download btn-sm" id="refreshInstagramBtn" onclick="loadSocialTrends()">
+                            <i class="fas fa-sync-alt me-1"></i>Refresh
+                        </button>
+                    </div>
+                    <p class="text-muted mb-3" id="trendNote">
+                        Instagram Reels first, with Aisa Twitter trends and X search as fallbacks.
+                    </p>
+                    <div id="trendInsights" class="mb-3" aria-live="polite"></div>
+                    <div class="row" id="instagramTrendsContainer" aria-live="polite">
+                        <div class="col-12 text-muted">Loading social trend data...</div>
+                    </div>
+                    
+                    <p class="text-muted mt-3 mb-0" id="lastUpdated">
+                        <i class="fas fa-clock me-1"></i>Last updated: -
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row results-section" id="resultsSection">
+            <!-- Hashtag Analysis -->
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-hashtag me-2"></i>Hashtag Trends</h5>
+                        <button class="btn btn-download btn-sm" onclick="downloadCSV('hashtag_analysis')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="hashtagChart"></canvas>
+                    </div>
+                    <div class="table-container">
+                        <table class="table table-sm table-hover" id="hashtagTable">
+                            <thead>
+                                <tr>
+                                    <th>Hashtag</th>
+                                    <th>Posts</th>
+                                    <th>Engagement</th>
+                                    <th>Trend Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Analysis -->
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Platform Comparison</h5>
+                        <button class="btn btn-download btn-sm" onclick="downloadCSV('platform_analysis')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="platformChart"></canvas>
+                    </div>
+                    <div class="table-container">
+                        <table class="table table-sm table-hover" id="platformTable">
+                            <thead>
+                                <tr>
+                                    <th>Platform</th>
+                                    <th>Posts</th>
+                                    <th>Avg Likes</th>
+                                    <th>Total Engagement</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Trends -->
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Daily Trends</h5>
+                        <button class="btn btn-download btn-sm" onclick="downloadCSV('daily_trends')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                    <div class="table-container">
+                        <table class="table table-sm table-hover" id="dailyTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Posts</th>
+                                    <th>Total Likes</th>
+                                    <th>Total Engagement</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Posts -->
+            <div class="col-md-6 mb-4">
+                <div class="dashboard-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-fire me-2"></i>Top Posts</h5>
+                        <button class="btn btn-download btn-sm" onclick="downloadCSV('top_posts')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table class="table table-sm table-hover" id="topPostsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Platform</th>
+                                    <th>User</th>
+                                    <th>Engagement</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let charts = {};
+
+        // Load dataset info on page load
+        window.onload = function() {
+            loadDatasetInfo();
+            checkStatus();
+            loadSocialTrends();
+            window.setInterval(loadSocialTrends, 5 * 60 * 1000);
+        };
+
+        function loadDatasetInfo() {
+            fetch('/api/dataset-info')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+                    document.getElementById('totalRows').textContent = data.rows;
+                    document.getElementById('totalColumns').textContent = data.columns;
+                    document.getElementById('columnNames').textContent = data.column_names.join(', ');
+                })
+                .catch(error => console.error('Error loading dataset info:', error));
+        }
+
+        function checkStatus() {
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    const badge = document.getElementById('statusBadge');
+                    if (data.status === 'ready') {
+                        badge.className = 'status-badge status-ready';
+                        badge.innerHTML = '<i class="fas fa-check-circle me-2"></i>Analysis Complete';
+                        document.getElementById('resultsSection').classList.add('active');
+                        loadResults();
+                        markProcessComplete();
+                    } else {
+                        badge.className = 'status-badge status-not-run';
+                        badge.innerHTML = '<i class="fas fa-circle me-2"></i>Not Run';
+                    }
+                })
+                .catch(error => console.error('Error checking status:', error));
+        }
+
+        function runAnalysis() {
+            const btn = document.getElementById('runAnalysisBtn');
+            const progressSection = document.getElementById('progressSection');
+            const badge = document.getElementById('statusBadge');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading Results...';
+            progressSection.classList.add('active');
+            badge.className = 'status-badge status-running';
+            badge.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+            
+            // Activate process steps quickly
+            for (let i = 1; i <= 6; i++) {
+                setTimeout(() => {
+                    document.getElementById('step' + i).classList.add('active');
+                }, (i - 1) * 300);
+            }
+
+            fetch('/api/run-analysis', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        setTimeout(() => {
+                            progressSection.classList.remove('active');
+                            badge.className = 'status-badge status-ready';
+                            badge.innerHTML = '<i class="fas fa-check-circle me-2"></i>Analysis Complete';
+                            document.getElementById('resultsSection').classList.add('active');
+                            loadResults();
+                            markProcessComplete();
+                        }, 2000);
+                    } else {
+                        alert('Analysis failed: ' + data.message);
+                        progressSection.classList.remove('active');
+                        badge.className = 'status-badge status-not-run';
+                        badge.innerHTML = '<i class="fas fa-circle me-2"></i>Failed';
+                    }
+                })
+                .catch(error => {
+                    alert('Error running analysis: ' + error);
+                    progressSection.classList.remove('active');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-play me-2"></i>View Results';
+                });
+        }
+
+        function markProcessComplete() {
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById('step' + i).classList.remove('active');
+                document.getElementById('step' + i).classList.add('completed');
+            }
+        }
+
+        function loadResults() {
+            loadAnalysisData('hashtag_analysis', 'hashtagTable', 'hashtagChart', createHashtagChart);
+            loadAnalysisData('platform_analysis', 'platformTable', 'platformChart', createPlatformChart);
+            loadAnalysisData('daily_trends', 'dailyTable', 'dailyChart', createDailyChart);
+            loadAnalysisData('top_posts', 'topPostsTable', null, null);
+        }
+
+        function loadAnalysisData(type, tableId, chartId, chartFunction) {
+            fetch(`/api/results/${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+                    
+                    // Populate table
+                    const table = document.getElementById(tableId);
+                    const tbody = table.querySelector('tbody');
+                    tbody.innerHTML = '';
+                    
+                    data.data.slice(0, 10).forEach(row => {
+                        const tr = document.createElement('tr');
+                        Object.values(row).slice(0, 4).forEach(value => {
+                            const td = document.createElement('td');
+                            td.textContent = typeof value === 'number' ? value.toFixed(2) : value;
+                            tr.appendChild(td);
+                        });
+                        tbody.appendChild(tr);
+                    });
+                    
+                    // Create chart if chart function provided
+                    if (chartFunction && chartId) {
+                        chartFunction(data.data, chartId);
+                    }
+                })
+                .catch(error => console.error(`Error loading ${type}:`, error));
+        }
+
+        function createHashtagChart(data, canvasId) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const top10 = data.slice(0, 10);
+            
+            if (charts[canvasId]) charts[canvasId].destroy();
+            
+            charts[canvasId] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: top10.map(d => d.hashtag),
+                    datasets: [{
+                        label: 'Trend Score',
+                        data: top10.map(d => d.trend_score),
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function createPlatformChart(data, canvasId) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            if (charts[canvasId]) charts[canvasId].destroy();
+            
+            charts[canvasId] = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(d => d.platform),
+                    datasets: [{
+                        data: data.map(d => d.total_engagement),
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.8)',
+                            'rgba(118, 75, 162, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function createDailyChart(data, canvasId) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            if (charts[canvasId]) charts[canvasId].destroy();
+            
+            charts[canvasId] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.date),
+                    datasets: [{
+                        label: 'Total Engagement',
+                        data: data.map(d => d.total_engagement),
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function downloadCSV(type) {
+            window.location.href = `/download/${type}`;
+        }
+
+        function loadSocialTrends() {
+            const button = document.getElementById('refreshInstagramBtn');
+            const container = document.getElementById('instagramTrendsContainer');
+            const insightsContainer = document.getElementById('trendInsights');
+            button.disabled = true;
+            fetch('/api/social-trends')
+                .then(async response => {
+                    const data = await response.json();
+                    if (!response.ok || !data.success) throw new Error(data.error || 'Instagram data is unavailable.');
+                    return data;
+                })
+                .then(data => {
+                    container.replaceChildren();
+                    data.trends.forEach(trend => {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-6 col-lg-4 mb-3';
+                        const card = document.createElement('article');
+                        card.className = 'card h-100';
+                        const body = document.createElement('div');
+                        body.className = 'card-body';
+
+                        const heading = document.createElement('h5');
+                        heading.className = 'card-title';
+                        heading.textContent = trend.title || trend.hashtag;
+                        const stats = document.createElement('p');
+                        stats.className = 'small text-muted mb-2';
+                        stats.textContent = trend.summary || `${trend.posts_sampled} sampled posts · ${trend.recent_posts_24h} in 24h · ${formatNumber(trend.avg_engagement)} avg. likes + comments`;
+                        const score = document.createElement('p');
+                        score.className = 'mb-3';
+                        score.textContent = `Relative trend score: ${trend.trend_score}/100`;
+                        body.append(heading, stats, score);
+
+                        trend.media.forEach(item => {
+                            const text = item.caption || `${item.media_type} · ${formatNumber(item.engagement)} interactions`;
+                            if (item.permalink) {
+                                const link = document.createElement('a');
+                                link.className = 'd-block small mb-2';
+                                link.href = item.permalink;
+                                link.target = '_blank';
+                                link.rel = 'noopener noreferrer';
+                                link.textContent = text;
+                                body.appendChild(link);
+                            } else {
+                                const sample = document.createElement('p');
+                                sample.className = 'small mb-2';
+                                sample.textContent = text;
+                                body.appendChild(sample);
+                            }
+                        });
+
+                        card.appendChild(body);
+                        col.appendChild(card);
+                        container.appendChild(col);
+                    });
+                    insightsContainer.replaceChildren();
+                    if (data.automatic_insights && data.automatic_insights.length) {
+                        const heading = document.createElement('h6');
+                        heading.textContent = `Automatic analysis · ${data.platform} via ${data.source}`;
+                        const list = document.createElement('ul');
+                        list.className = 'mb-0';
+                        data.automatic_insights.forEach(insight => {
+                            const item = document.createElement('li');
+                            item.textContent = insight;
+                            list.appendChild(item);
+                        });
+                        insightsContainer.append(heading, list);
+                    }
+                    document.getElementById('trendNote').textContent = data.fallback_errors && data.fallback_errors.length
+                        ? `${data.note} A primary provider was unavailable; fallback data is shown.`
+                        : data.note;
+                    document.getElementById('lastUpdated').textContent = `Last updated: ${new Date(data.last_updated).toLocaleString()}`;
+                })
+                .catch(error => {
+                    container.replaceChildren();
+                    const message = document.createElement('p');
+                    message.className = 'col-12 text-muted';
+                    message.textContent = error.message;
+                    container.appendChild(message);
+                    document.getElementById('trendNote').textContent = 'Configure Meta Instagram, an Aisa API token, an Apify actor, or an X API bearer token to enable live trends.';
+                })
+                .finally(() => { button.disabled = false; });
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+    </script>
+</body>
+</html>

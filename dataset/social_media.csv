@@ -1,0 +1,51 @@
+id,date,platform,user,text,hashtags,likes,shares,comments
+1,2026-01-01,Twitter,@tech_guru,"AI is changing the world rapidly","#AI #Technology",120,30,20
+2,2026-01-01,Instagram,@travel_diaries,"Beautiful sunset in Bali","#Travel #Bali #Sunset",250,70,40
+3,2026-01-01,Twitter,@foodie_life,"Best pizza I ever had","#Food #Pizza",80,15,10
+4,2026-01-02,Instagram,@fitness_pro,"Morning workout complete","#Fitness #Gym #Workout",180,45,25
+5,2026-01-02,Twitter,@news_daily,"Breaking: New climate report released","#Climate #News",320,90,60
+6,2026-01-02,Instagram,@fashion_week,"New collection looks amazing","#Fashion #Style",150,40,30
+7,2026-01-03,Twitter,@crypto_king,"Bitcoin hitting new highs","#Crypto #Bitcoin",450,120,80
+8,2026-01-03,Instagram,@pet_lover,"My cat is so cute today","#Pets #Cats",95,25,15
+9,2026-01-03,Twitter,@gamer_zone,"New game release is incredible","#Gaming #NewRelease",200,55,35
+10,2026-01-04,Instagram,@music_fan,"Concert last night was amazing","#Music #Concert",280,75,50
+11,2026-01-04,Twitter,@movie_buff,"Just watched the best movie ever","#Movies #Film",165,42,28
+12,2026-01-04,Instagram,@nature_pic,"Stunning mountain view","#Nature #Mountains",220,58,38
+13,2026-01-05,Twitter,@sports_news,"Championship game tonight","#Sports #Football",380,100,70
+14,2026-01-05,Instagram,@art_gallery,"Modern art exhibition","#Art #Culture",110,30,20
+15,2026-01-05,Twitter,@tech_review,"New smartphone review is up","#Tech #Review",140,38,25
+16,2026-01-06,Instagram,@healthy_eating,"Delicious vegan recipe","#Food #Vegan #Healthy",175,45,30
+17,2026-01-06,Twitter,@business_news,"Market trends for 2026","#Business #Finance",290,78,52
+18,2026-01-06,Instagram,@dance_studio,"New choreography video","#Dance #Performance",135,35,23
+19,2026-01-07,Twitter,@science_daily,"Space discovery announced","#Science #Space",410,110,75
+20,2026-01-07,Instagram,@home_decor,"Living room makeover ideas","#Home #Decor",195,50,34
+21,2026-01-07,Twitter,@book_worm,"Finished reading an amazing book","#Books #Reading",85,22,14
+22,2026-01-08,Instagram,@car_enthusiast,"Classic car restoration","#Cars #Classic",245,65,43
+23,2026-01-08,Twitter,@comedy_club,"Stand-up comedy special","#Comedy #Funny",155,40,27
+24,2026-01-08,Instagram,@photography_pro,"Portrait photography tips","#Photography #Tips",210,55,37
+25,2026-01-09,Twitter,@education_hub,"Learning new skills online","#Education #Learning",125,32,21
+26,2026-01-09,Instagram,@garden_lover,"Spring planting guide","#Garden #Plants",170,44,29
+27,2026-01-09,Twitter,@startup_life,"Building my dream startup","#Startup #Entrepreneur",335,88,59
+28,2026-01-10,Instagram,@beauty_tips,"Skincare routine for winter","#Beauty #Skincare",190,49,33
+29,2026-01-10,Twitter,@gaming_news,"Esports tournament results","#Gaming #Esports",265,70,47
+30,2026-01-10,Instagram,@coffee_addict,"Perfect morning brew","#Coffee #Morning",100,26,17
+31,2026-01-11,Twitter,@history_buff,"Ancient civilization discovery","#History #Archaeology",230,60,40
+32,2026-01-11,Instagram,@yoga_teacher,"Daily meditation practice","#Yoga #Meditation",145,37,24
+33,2026-01-11,Twitter,@tech_trends,"Future of AI in healthcare","#AI #Healthcare",395,105,72
+34,2026-01-12,Instagram,@wildlife_photo,"Rare bird species spotted","#Wildlife #Nature",275,72,48
+35,2026-01-12,Twitter,@music_producer,"New beat drop","#Music #Producer",160,41,27
+36,2026-01-12,Instagram,@chef_kitchen,"Gourmet cooking techniques","#Food #Cooking",185,48,32
+37,2026-01-13,Twitter,@politics_watch,"Election coverage updates","#Politics #News",420,115,78
+38,2026-01-13,Instagram,@fashion_blogger,"Street style inspiration","#Fashion #OOTD",205,53,36
+39,2026-01-13,Twitter,@health_expert,"Mental health awareness","#Health #Wellness",215,56,38
+40,2026-01-14,Instagram,@travel_vlogger,"Hidden gems in Europe","#Travel #Europe",320,85,57
+41,2026-01-14,Twitter,@dev_community,"Open source contribution","#Coding #OpenSource",175,45,30
+42,2026-01-14,Instagram,@parenting_tips,"Raising happy kids","#Parenting #Family",150,39,26
+43,2026-01-15,Twitter,@eco_warrior,"Sustainable living tips","#Environment #Sustainability",285,74,50
+44,2026-01-15,Instagram,@fitness_motivation,"Transformation journey","#Fitness #Motivation",240,62,42
+45,2026-01-15,Twitter,@finance_guru,"Investment strategies 2026","#Finance #Investing",365,96,65
+46,2026-01-16,Instagram,@art_creative,"Digital painting tutorial","#Art #DigitalArt",130,34,22
+47,2026-01-16,Twitter,@language_learner,"Learning Spanish basics","#Language #Learning",115,30,20
+48,2026-01-16,Instagram,@pet_health,"Dog training tips","#Pets #Dogs",155,40,27
+49,2026-01-17,Twitter,@movie_review,"Oscar predictions 2026","#Movies #Oscars",295,77,52
+50,2026-01-17,Instagram,@interior_design,"Minimalist home design","#Home #Interior",220,57,38

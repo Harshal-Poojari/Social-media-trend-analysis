@@ -1,0 +1,51 @@
+id,date,platform,user,hashtags,likes,shares,comments,engagement
+7,2026-01-03,Twitter,@crypto_king,#Crypto #Bitcoin,450,120,80,650
+37,2026-01-13,Twitter,@politics_watch,#Politics #News,420,115,78,613
+19,2026-01-07,Twitter,@science_daily,#Science #Space,410,110,75,595
+33,2026-01-11,Twitter,@tech_trends,#AI #Healthcare,395,105,72,572
+13,2026-01-05,Twitter,@sports_news,#Sports #Football,380,100,70,550
+45,2026-01-15,Twitter,@finance_guru,#Finance #Investing,365,96,65,526
+27,2026-01-09,Twitter,@startup_life,#Startup #Entrepreneur,335,88,59,482
+5,2026-01-02,Twitter,@news_daily,#Climate #News,320,90,60,470
+40,2026-01-14,Instagram,@travel_vlogger,#Travel #Europe,320,85,57,462
+49,2026-01-17,Twitter,@movie_review,#Movies #Oscars,295,77,52,424
+17,2026-01-06,Twitter,@business_news,#Business #Finance,290,78,52,420
+43,2026-01-15,Twitter,@eco_warrior,#Environment #Sustainability,285,74,50,409
+10,2026-01-04,Instagram,@music_fan,#Music #Concert,280,75,50,405
+34,2026-01-12,Instagram,@wildlife_photo,#Wildlife #Nature,275,72,48,395
+29,2026-01-10,Twitter,@gaming_news,#Gaming #Esports,265,70,47,382
+2,2026-01-01,Instagram,@travel_diaries,#Travel #Bali #Sunset,250,70,40,360
+22,2026-01-08,Instagram,@car_enthusiast,#Cars #Classic,245,65,43,353
+44,2026-01-15,Instagram,@fitness_motivation,#Fitness #Motivation,240,62,42,344
+31,2026-01-11,Twitter,@history_buff,#History #Archaeology,230,60,40,330
+12,2026-01-04,Instagram,@nature_pic,#Nature #Mountains,220,58,38,316
+50,2026-01-17,Instagram,@interior_design,#Home #Interior,220,57,38,315
+39,2026-01-13,Twitter,@health_expert,#Health #Wellness,215,56,38,309
+24,2026-01-08,Instagram,@photography_pro,#Photography #Tips,210,55,37,302
+38,2026-01-13,Instagram,@fashion_blogger,#Fashion #OOTD,205,53,36,294
+9,2026-01-03,Twitter,@gamer_zone,#Gaming #NewRelease,200,55,35,290
+20,2026-01-07,Instagram,@home_decor,#Home #Decor,195,50,34,279
+28,2026-01-10,Instagram,@beauty_tips,#Beauty #Skincare,190,49,33,272
+36,2026-01-12,Instagram,@chef_kitchen,#Food #Cooking,185,48,32,265
+4,2026-01-02,Instagram,@fitness_pro,#Fitness #Gym #Workout,180,45,25,250
+16,2026-01-06,Instagram,@healthy_eating,#Food #Vegan #Healthy,175,45,30,250
+41,2026-01-14,Twitter,@dev_community,#Coding #OpenSource,175,45,30,250
+26,2026-01-09,Instagram,@garden_lover,#Garden #Plants,170,44,29,243
+11,2026-01-04,Twitter,@movie_buff,#Movies #Film,165,42,28,235
+35,2026-01-12,Twitter,@music_producer,#Music #Producer,160,41,27,228
+23,2026-01-08,Twitter,@comedy_club,#Comedy #Funny,155,40,27,222
+48,2026-01-16,Instagram,@pet_health,#Pets #Dogs,155,40,27,222
+6,2026-01-02,Instagram,@fashion_week,#Fashion #Style,150,40,30,220
+42,2026-01-14,Instagram,@parenting_tips,#Parenting #Family,150,39,26,215
+32,2026-01-11,Instagram,@yoga_teacher,#Yoga #Meditation,145,37,24,206
+15,2026-01-05,Twitter,@tech_review,#Tech #Review,140,38,25,203
+18,2026-01-06,Instagram,@dance_studio,#Dance #Performance,135,35,23,193
+46,2026-01-16,Instagram,@art_creative,#Art #DigitalArt,130,34,22,186
+25,2026-01-09,Twitter,@education_hub,#Education #Learning,125,32,21,178
+1,2026-01-01,Twitter,@tech_guru,#AI #Technology,120,30,20,170
+47,2026-01-16,Twitter,@language_learner,#Language #Learning,115,30,20,165
+14,2026-01-05,Instagram,@art_gallery,#Art #Culture,110,30,20,160
+30,2026-01-10,Instagram,@coffee_addict,#Coffee #Morning,100,26,17,143
+8,2026-01-03,Instagram,@pet_lover,#Pets #Cats,95,25,15,135
+21,2026-01-07,Twitter,@book_worm,#Books #Reading,85,22,14,121
+3,2026-01-01,Twitter,@foodie_life,#Food #Pizza,80,15,10,105
